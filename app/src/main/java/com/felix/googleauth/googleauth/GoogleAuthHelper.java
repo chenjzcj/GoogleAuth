@@ -80,7 +80,9 @@ public class GoogleAuthHelper {
     public static String getTOTPForAndroid(String secretKey, long time) {
         Base32 base32 = new Base32();
         byte[] bytes = base32.decode(secretKey.toUpperCase());
-        //String hexKey = Hex.encodeHexString(bytes);//不适用于安卓设备，会报异常【No static method encodeHexString([B)Ljava/lang/String; in class Lorg/apache/commons/codec/binary/Hex;】
+        //以下方法调用不适用于安卓设备，会报异常【No static method encodeHexString([B)Ljava/lang/String; in class Lorg/apache/commons/codec/binary/Hex;】
+        //解决方案：https://blog.csdn.net/diandianxiyu_geek/article/details/79153703
+        //String hexKey = Hex.encodeHexString(bytes);
         String hexKey = new String(Hex.encodeHex(bytes));
         String hexTime = Long.toHexString(time);
         return TOTP.generateTOTP(hexKey, hexTime, "6");
