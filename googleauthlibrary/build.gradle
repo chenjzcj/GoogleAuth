@@ -1,0 +1,52 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.bintray-release'
+
+android {
+    compileSdkVersion 28
+
+
+
+    defaultConfig {
+        minSdkVersion 19
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+}
+
+//如何用AndroidStudio将代码上传至Maven仓库？
+//https://blog.csdn.net/BestRivena/article/details/77977332
+//报错：Unable to load class 'org.gradle.api.internal.component.Usage'
+//解决方案（版本问题）：https://blog.csdn.net/qq_27818541/article/details/78590439
+
+//发布命令：./gradlew clean build bintrayUpload -PbintrayUser=felixzhong -PbintrayKey=8d10fd8e71a76da8ecc79ad6ef12b9e8707893cb -PdryRun=false
+publish {
+    userOrg = "felixzhong"//bintray.com用户名
+    groupId = "com.felix"//jecenter上的路径
+    artifactId = "googleauthLibrary"//项目名称
+    publishVersion = "1.0.0"//版本号
+    desc = "谷歌验证"//描述，不重要
+    website = "https://github.com/chenjzcj/GoogleAuth"//网站，不重要，尽量模拟github上面的，当然有最好了
+    repoName = "felixRepo"//库的名称
+    //compile 'com.felix:googleauthLibrary:1.0.0' 最终结果(add to jcenter后需要至少2小时才可以使用)
+}

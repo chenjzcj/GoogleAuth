@@ -8,7 +8,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.felix.googleauth.googleauth.GoogleAuthHelper;
+import com.felix.googleauthlibrary.GoogleAuthHelper;
+
 
 public class MainActivity extends AppCompatActivity {
 

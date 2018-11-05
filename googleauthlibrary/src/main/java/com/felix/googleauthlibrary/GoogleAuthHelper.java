@@ -1,4 +1,4 @@
-package com.felix.googleauth.googleauth;
+package com.felix.googleauthlibrary;
 
 import org.apache.commons.codec.binary.Base32;
 import org.apache.commons.codec.binary.Hex;
@@ -31,7 +31,9 @@ public class GoogleAuthHelper {
     }
 
     /**
-     * 随机生成一个密钥(小写)
+     * Randomly generate a key (lowercase).
+     *
+     * @return String
      */
     public static String createSecretKey() {
         SecureRandom random = new SecureRandom();
@@ -43,7 +45,9 @@ public class GoogleAuthHelper {
     }
 
     /**
-     * 随机生成一个密钥(大写)
+     * Randomly generate a key (uppercase).
+     *
+     * @return String
      */
     public static String createSecretKeyUpperCase() {
         SecureRandom random = new SecureRandom();
@@ -56,11 +60,12 @@ public class GoogleAuthHelper {
 
 
     /**
-     * 根据密钥获取验证码
-     * 返回字符串是因为验证码有可能以 0 开头
+     * Obtaining verification code based on key
+     * 返The return string is because the verification code is likely to start at 0.
      *
      * @param secretKey 密钥
-     * @param time      第几个 30 秒 System.currentTimeMillis() / 1000 / 30
+     * @param time      The first few 30 seconds System.currentTimeMillis() / 1000 / 30
+     * @return String
      */
     public static String getTOTP(String secretKey, long time) {
         Base32 base32 = new Base32();
@@ -71,16 +76,17 @@ public class GoogleAuthHelper {
     }
 
     /**
-     * 根据密钥获取验证码
-     * 返回字符串是因为验证码有可能以 0 开头
+     * Obtaining verification code based on key
+     * The return string is because the verification code is likely to start at 0.
      *
      * @param secretKey 密钥
-     * @param time      第几个 30 秒 System.currentTimeMillis() / 1000 / 30
+     * @param time      The first few 30 seconds System.currentTimeMillis() / 1000 / 30
+     * @return String
      */
     public static String getTOTPForAndroid(String secretKey, long time) {
         Base32 base32 = new Base32();
         byte[] bytes = base32.decode(secretKey.toUpperCase());
-        //以下方法调用不适用于安卓设备，会报异常【No static method encodeHexString([B)Ljava/lang/String; in class Lorg/apache/commons/codec/binary/Hex;】
+        //The following method calls are not applicable to Android devices, and will report exceptions[No static method encodeHexString([B)Ljava/lang/String; in class Lorg/apache/commons/codec/binary/Hex;]
         //解决方案：https://blog.csdn.net/diandianxiyu_geek/article/details/79153703
         //String hexKey = Hex.encodeHexString(bytes);
         String hexKey = new String(Hex.encodeHex(bytes));
@@ -90,13 +96,14 @@ public class GoogleAuthHelper {
 
 
     /**
-     * 生成 Google Authenticator 二维码所需信息
-     * Google Authenticator 约定的二维码信息格式 : otpauth://totp/{issuer}:{account}?secret={secret}&issuer={issuer}
-     * 参数需要 url 编码 + 号需要替换成 %20
+     * Information needed to generate Google Authenticator two-dimensional code
+     * Google Authenticator The agreed two-dimensional code format:otpauth://totp/{issuer}:{account}?secret={secret}&issuer={issuer};
+     * Parameters need URL code + number need to be replaced by%20.
      *
      * @param secret  密钥 使用 createSecretKey 方法生成
-     * @param account 用户账户 如: example@domain.com 138XXXXXXXX
-     * @param issuer  服务名称 如: Google Github 印象笔记
+     * @param account User accounts such as:example@domain.com 138XXXXXXXX
+     * @param issuer  Service names: such as Google Github impression notes
+     * @return String
      */
     public static String createGoogleAuthQRCodeData(String secret, String account, String issuer) {
         String qrCodeData = "otpauth://totp/%s?secret=%s&issuer=%s";
@@ -111,7 +118,7 @@ public class GoogleAuthHelper {
 
 
     /**
-     * 时间前后偏移量
+     * Time offset
      */
     private static final int timeExcursion = 3;
 
@@ -119,7 +126,8 @@ public class GoogleAuthHelper {
      * 校验方法
      *
      * @param secretKey 密钥
-     * @param code      用户输入的 TOTP 验证码
+     * @param code      User input TOTP verification code
+     * @return boolean
      */
     public static boolean verify(String secretKey, String code) {
         long time = System.currentTimeMillis() / 1000 / 30;
@@ -136,7 +144,8 @@ public class GoogleAuthHelper {
      * 校验方法
      *
      * @param secretKey 密钥
-     * @param code      用户输入的 TOTP 验证码
+     * @param code      User input TOTP verification code
+     * @return boolean
      */
     public static boolean verifyForAndroid(String secretKey, String code) {
         long time = System.currentTimeMillis() / 1000 / 30;
@@ -150,10 +159,11 @@ public class GoogleAuthHelper {
     }
 
     /**
-     * 校验方法(无偏移)
+     * Calibration method (no offset)
      *
      * @param secretKey 密钥
-     * @param code      用户输入的 TOTP 验证码
+     * @param code      User input TOTP verification code
+     * @return boolean
      */
     public static boolean verifyNoExcursion(String secretKey, String code) {
         long time = System.currentTimeMillis() / 1000 / 30;
@@ -162,10 +172,11 @@ public class GoogleAuthHelper {
     }
 
     /**
-     * 校验方法(无偏移)
+     * Calibration method (no offset)
      *
      * @param secretKey 密钥
-     * @param code      用户输入的 TOTP 验证码
+     * @param code      User input TOTP verification code
+     * @return boolean
      */
     public static boolean verifyNoExcursionForAndroid(String secretKey, String code) {
         long time = System.currentTimeMillis() / 1000 / 30;

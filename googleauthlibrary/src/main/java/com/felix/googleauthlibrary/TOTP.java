@@ -1,4 +1,4 @@
-package com.felix.googleauth.googleauth; /**
+package com.felix.googleauthlibrary; /**
  * Copyright (c) 2011 IETF Trust and the persons identified as
  * authors of the code. All rights reserved.
  * <p>
@@ -10,22 +10,21 @@ package com.felix.googleauth.googleauth; /**
  */
 
 import java.lang.reflect.UndeclaredThrowableException;
+import java.math.BigInteger;
 import java.security.GeneralSecurityException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
-
-import java.math.BigInteger;
-import java.util.TimeZone;
 
 /**
  * This is an example implementation of the OATH TOTP algorithm. Visit
  * www.openauthentication.org for more information.
  * <p>
- * 基于时间的TOTP算法：
+ * Time based TOTP algorithm:
  * https://download.csdn.net/download/cjq316210/9317463
  *
  * @author Johan Rydell, PortWise, Inc.
@@ -87,7 +86,7 @@ public class TOTP {
      * @param time         : a value that reflects a time
      * @param returnDigits : number of digits to return
      * @return: a numeric String in base 10 that includes
-     * {@link truncationDigits} digits
+     * {truncationDigits} digits
      */
 
     public static String generateTOTP(String key, String time,
@@ -102,7 +101,7 @@ public class TOTP {
      * @param time         : a value that reflects a time
      * @param returnDigits : number of digits to return
      * @return: a numeric String in base 10 that includes
-     * {@link truncationDigits} digits
+     * { truncationDigits} digits
      */
 
     public static String generateTOTP256(String key, String time,
@@ -117,7 +116,7 @@ public class TOTP {
      * @param time         : a value that reflects a time
      * @param returnDigits : number of digits to return
      * @return: a numeric String in base 10 that includes
-     * {@link truncationDigits} digits
+     * { truncationDigits} digits
      */
 
     public static String generateTOTP512(String key, String time,
@@ -133,7 +132,7 @@ public class TOTP {
      * @param returnDigits : number of digits to return ���س��� --6
      * @param crypto       : the crypto function to use
      * @return: a numeric String in base 10 that includes
-     * {@link truncationDigits} digits
+     * {truncationDigits} digits
      */
 
     public static String generateTOTP(String key, String time,
