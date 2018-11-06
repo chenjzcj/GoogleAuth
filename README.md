@@ -9,3 +9,7 @@ https://www.cnblogs.com/Athrun/p/php-google-authenticator.html
 https://www.cnblogs.com/taiyonghai/p/6831385.html
 4. 不懂使用Google身份验证器你就亏大了
 https://www.jianshu.com/p/f268b9f41390
+
+使用方式：
+
+    implementation 'com.felix:googleauthLibrary:1.0.1'
