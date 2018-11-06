@@ -9,8 +9,8 @@ android {
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "1.0.1"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -38,13 +38,15 @@ dependencies {
 //https://blog.csdn.net/BestRivena/article/details/77977332
 //报错：Unable to load class 'org.gradle.api.internal.component.Usage'
 //解决方案（版本问题）：https://blog.csdn.net/qq_27818541/article/details/78590439
+//关于maven制作、Bintray上传、implementation远程依赖
+//https://www.jianshu.com/p/a0a280161f4e
 
 //发布命令：./gradlew clean build bintrayUpload -PbintrayUser=felixzhong -PbintrayKey=8d10fd8e71a76da8ecc79ad6ef12b9e8707893cb -PdryRun=false
 publish {
     userOrg = "felixzhong"//bintray.com用户名
     groupId = "com.felix"//jecenter上的路径
     artifactId = "googleauthLibrary"//项目名称
-    publishVersion = "1.0.0"//版本号
+    publishVersion = "1.0.1"//版本号
     desc = "谷歌验证"//描述，不重要
     website = "https://github.com/chenjzcj/GoogleAuth"//网站，不重要，尽量模拟github上面的，当然有最好了
     repoName = "felixRepo"//库的名称

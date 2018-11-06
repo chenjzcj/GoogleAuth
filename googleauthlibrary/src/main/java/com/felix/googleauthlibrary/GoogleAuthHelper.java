@@ -97,7 +97,7 @@ public class GoogleAuthHelper {
 
     /**
      * Information needed to generate Google Authenticator two-dimensional code
-     * Google Authenticator The agreed two-dimensional code format:otpauth://totp/{issuer}:{account}?secret={secret}&issuer={issuer};
+     * Google Authenticator The agreed two-dimensional code format:otpauth://totp/{issuer}:{account}?secret={secret}∮issuer={issuer};
      * Parameters need URL code + number need to be replaced by%20.
      *
      * @param secret  密钥 使用 createSecretKey 方法生成
