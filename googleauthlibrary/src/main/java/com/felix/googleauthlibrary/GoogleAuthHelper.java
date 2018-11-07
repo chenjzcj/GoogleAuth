@@ -98,7 +98,7 @@ public class GoogleAuthHelper {
 
     /**
      * Information needed to generate Google Authenticator two-dimensional code
-     * Google Authenticator The agreed two-dimensional code format: otpauth://totp/{issuer}:{account}?secret={secret}&issuer={issuer};
+     * Google Authenticator The agreed two-dimensional code
      * Parameters need URL code + number need to be replaced by%20.
      *
      * @param secret  密钥 使用 createSecretKey 方法生成
@@ -112,6 +112,7 @@ public class GoogleAuthHelper {
             account = URLEncoder.encode(issuer + ":" + account, "UTF-8").replace("+", "%20");
             secret = URLEncoder.encode(secret, "UTF-8").replace("+", "%20");
             issuer = URLEncoder.encode(issuer, "UTF-8").replace("+", "%20");
+            //format: otpauth://totp/{issuer}:{account}?secret={secret}&issuer={issuer};
             return String.format(qrCodeData, account, secret, issuer);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -120,15 +121,16 @@ public class GoogleAuthHelper {
     }
 
     /**
-     * Create GoogleAuth QRCode String with format: otpauth://totp/%s?secret=%s&issuer=%s;
+     * Create GoogleAuth QRCode String
      *
      * @param secret  密钥 使用 createSecretKey 方法生成
      * @param account User accounts such as:example@domain.com or 138XXXXXXXX
      * @param issuer  Service names: such as Google Github impression notes
-     * @return Format: Example ： otpauth://totp/15013226240?secret=6QUZJQ5A3AW5J2VU&issuer=Huobi or otpauth://totp/11051500@qq.com?secret=6QUZJQ5A3AW5J2VU&issuer=TOKOK
+     * @return GoogleAuth QRCode Str
      */
     public static String createGoogleAuthQRCodeStr(String secret, String account, String issuer) {
         String qrCodeData = "otpauth://totp/%s?secret=%s&issuer=%s";
+        //Format: Example: otpauth://totp/15013226240?secret=6QUZJQ5A3AW5J2VU&issuer=Huobi or otpauth://totp/11051500@qq.com?secret=6QUZJQ5A3AW5J2VU&issuer=TOKOK
         return String.format(qrCodeData, account, secret, issuer);
     }
 
