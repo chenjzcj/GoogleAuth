@@ -12,4 +12,4 @@ https://www.jianshu.com/p/f268b9f41390
 
 使用方式：
 
-    implementation 'com.felix:googleauthLibrary:1.0.1'
+    implementation 'com.felix:googleauthLibrary:1.0.2'
