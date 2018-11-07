@@ -9,6 +9,7 @@ import java.security.SecureRandom;
 
 /**
  * Created by Felix.Zhong on 2018/10/31 14:13
+ * https://www.jianshu.com/p/de903c074d77
  */
 public class GoogleAuthHelper {
 
@@ -88,7 +89,7 @@ public class GoogleAuthHelper {
         byte[] bytes = base32.decode(secretKey.toUpperCase());
         //The following method calls are not applicable to Android devices, and will report exceptions[No static method encodeHexString([B)Ljava/lang/String; in class Lorg/apache/commons/codec/binary/Hex;]
         //解决方案：https://blog.csdn.net/diandianxiyu_geek/article/details/79153703
-        //String hexKey = Hex.encodeHexString(bytes);
+        //String hexKey = Hex.encodeHexString(bytes); for Android device below method
         String hexKey = new String(Hex.encodeHex(bytes));
         String hexTime = Long.toHexString(time);
         return TOTP.generateTOTP(hexKey, hexTime, "6");
@@ -97,23 +98,38 @@ public class GoogleAuthHelper {
 
     /**
      * Information needed to generate Google Authenticator two-dimensional code
-     * Google Authenticator The agreed two-dimensional code format:otpauth://totp/{issuer}:{account}?secret={secret}∮issuer={issuer};
+     * Google Authenticator The agreed two-dimensional code format: otpauth://totp/{issuer}:{account}?secret={secret}&issuer={issuer};
      * Parameters need URL code + number need to be replaced by%20.
      *
      * @param secret  密钥 使用 createSecretKey 方法生成
-     * @param account User accounts such as:example@domain.com 138XXXXXXXX
+     * @param account User accounts such as:example@domain.com or 138XXXXXXXX
      * @param issuer  Service names: such as Google Github impression notes
      * @return String
      */
     public static String createGoogleAuthQRCodeData(String secret, String account, String issuer) {
         String qrCodeData = "otpauth://totp/%s?secret=%s&issuer=%s";
         try {
-            return String.format(qrCodeData, URLEncoder.encode(issuer + ":" + account, "UTF-8").replace("+", "%20"), URLEncoder.encode(secret, "UTF-8")
-                    .replace("+", "%20"), URLEncoder.encode(issuer, "UTF-8").replace("+", "%20"));
+            account = URLEncoder.encode(issuer + ":" + account, "UTF-8").replace("+", "%20");
+            secret = URLEncoder.encode(secret, "UTF-8").replace("+", "%20");
+            issuer = URLEncoder.encode(issuer, "UTF-8").replace("+", "%20");
+            return String.format(qrCodeData, account, secret, issuer);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
         return "";
+    }
+
+    /**
+     * Create GoogleAuth QRCode String with format: otpauth://totp/%s?secret=%s&issuer=%s;
+     *
+     * @param secret  密钥 使用 createSecretKey 方法生成
+     * @param account User accounts such as:example@domain.com or 138XXXXXXXX
+     * @param issuer  Service names: such as Google Github impression notes
+     * @return Format: Example ： otpauth://totp/15013226240?secret=6QUZJQ5A3AW5J2VU&issuer=Huobi or otpauth://totp/11051500@qq.com?secret=6QUZJQ5A3AW5J2VU&issuer=TOKOK
+     */
+    public static String createGoogleAuthQRCodeStr(String secret, String account, String issuer) {
+        String qrCodeData = "otpauth://totp/%s?secret=%s&issuer=%s";
+        return String.format(qrCodeData, account, secret, issuer);
     }
 
 
