@@ -1,4 +1,4 @@
-###谷歌验证生成器
+### 谷歌验证生成器
 参考博客：
 1. Java 接入 Google Authenticator（主要实现代码参考此博客）
 https://www.jianshu.com/p/de903c074d77
